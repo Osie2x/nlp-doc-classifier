@@ -1,0 +1,54 @@
+app:
+  name: DocuMind
+  version: "1.0.0"
+  debug: false
+  secret_key: "change-me-in-production"
+
+server:
+  host: "0.0.0.0"
+  port: 5000
+
+database:
+  url: "sqlite:///documind.db"
+  echo: false
+  pool_size: 5
+
+nlp:
+  spacy_model: "en_core_web_sm"
+  max_text_length: 1000000
+  batch_size: 64
+
+pipeline:
+  min_token_length: 2
+  max_features: 20000
+  ngram_range: [1, 2]
+  remove_stopwords: true
+  lemmatize: true
+
+classifier:
+  model_type: "ensemble"          # logistic_regression | svm | random_forest | ensemble
+  model_path: "models/saved/documind_classifier.joblib"
+  vectorizer_path: "models/saved/documind_vectorizer.joblib"
+  label_encoder_path: "models/saved/documind_labels.joblib"
+  confidence_threshold: 0.5
+
+training:
+  test_size: 0.2
+  random_state: 42
+  cv_folds: 5
+  n_jobs: -1
+
+categories:
+  - Legal
+  - Medical
+  - Financial
+  - Technical
+  - HR
+  - Marketing
+  - Research
+  - Compliance
+
+logging:
+  level: INFO
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  file: "logs/documind.log"
